@@ -34,6 +34,8 @@ class ProfEdit extends Component
     public $mid;
     public $sc = 0;
 
+    public $wh = 1;
+
     public $pass;
     public $whcode;
 
@@ -60,6 +62,14 @@ class ProfEdit extends Component
     public function open($id)
     {
         $prof = Prof::find($id);
+
+
+        $user = User::where('prof_id', $prof->id)->first();
+
+        if ($user) {
+            $this->wh = $user->wh;
+        }
+
 
         $this->nom = $prof->nom;
         $this->nomfr = $prof->nomfr;
@@ -133,7 +143,6 @@ class ProfEdit extends Component
 
         $user = User::where('prof_id', $prof->id)->first();
 
-
         if (!($user or ($user->parent_id ?? null))) {
             //  dd(2);
             $password = Str::random(8);
@@ -148,18 +157,22 @@ class ProfEdit extends Component
                 'visible' => 0,
                 'wh' => 1,
                 'prof_id' => $prof->id,
+                'wh' => 1,
             ]);
 
             $prof->update(['password'   => $password,]);
 
             $this->pass = $prof->password;
+            $this->wh = $prof->wh;
         } else {
+
 
             // dd(1);
             $user->update([
                 'name'   => $prof->tel1,
                 'password'   => bcrypt($prof->password),
                 'visible' => 0,
+                'wh' => $this->wh,
             ]);
 
             $prof->update([
@@ -180,6 +193,10 @@ class ProfEdit extends Component
             $this->tel2 = Str::replace(' ', '', $this->tel2);
         }
 
+
+
+
+
         $create = new WhatsappApiService();
 
         $create->sentPass(
@@ -188,8 +205,6 @@ class ProfEdit extends Component
             $this->tel2,
             $this->pass
         );
-
-        dd($create);
     }
 
 

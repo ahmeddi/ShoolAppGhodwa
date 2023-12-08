@@ -32,8 +32,8 @@ class ResultAdd extends Component
 
             $prof = Prof::find(auth()->user()->prof_id);
 
-            $this->mats = $prof->mats;
-            $this->classes = $prof->classes;
+            $this->mats = $prof->mats->unique('id');
+            $this->classes = $prof->classes->unique('id');
         } else {
             $this->mats = Mat::all('nom', 'id');
             $this->classes = Classe::all('nom', 'id');
