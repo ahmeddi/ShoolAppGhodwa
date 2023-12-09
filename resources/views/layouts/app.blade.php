@@ -178,14 +178,15 @@
                                             </svg>
                                         </button>
                                     </div>
+                                    <div
+                                    class="flex w-full justify-center text-center items-center gap-2 rounded px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-700 focus:bg-gray-100 focus:text-gray-700 focus:outline-none dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-100 dark:focus:bg-gray-800 dark:focus:text-gray-100"
+                                        >
+                                    <span class="w-full"> @livewire('language-switcher')</span>
+                                     </div>
                                     
                                     @can('admin')
                                         <div class="space-y-1 p-2 w-full justify-center text-center">
-                                        <div
-                                            class="flex w-full items-center gap-2 rounded px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-700 focus:bg-gray-100 focus:text-gray-700 focus:outline-none dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-100 dark:focus:bg-gray-800 dark:focus:text-gray-100"
-                                        >
-                                            <span class="w-full"> @livewire('language-switcher')</span>
-                                        </div>
+                                       
                                         <a
                                             x-on:click="userDropdownOpen = false,mobileSidebarOpen = false" 
                                             role="menuitem"
