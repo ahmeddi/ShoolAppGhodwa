@@ -3,13 +3,22 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Illuminate\Http\Request;
 
 class P404 extends Component
 {
-    function back($locale, $url) 
+    public $locale;
+
+
+    public function mount()
+    {
+        $this->locale = app()->getLocale();
+    }
+
+
+    function back($locale, $url)
     {
         return redirect()->back();
-        
     }
 
 

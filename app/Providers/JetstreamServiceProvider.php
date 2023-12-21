@@ -40,9 +40,9 @@ class JetstreamServiceProvider extends ServiceProvider
                     return $user;
                 }
             }
-    
-            return null;
-            
+
+            //  return null;
+
         });
     }
 

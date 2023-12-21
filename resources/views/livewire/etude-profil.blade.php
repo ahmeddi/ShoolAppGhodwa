@@ -4,19 +4,19 @@
             <div class="flex p-2 w-auto  mb-4  ">
                 @cannot('parent')
                         <div class=" w-40 ">
-                            {{-- <button  wire:click="$dispatch('pic')" class=" relative flex justify-center object-cover items-center w-full h-36 mt-2  rounded-full overflow-hidden bg-gray-200 dark:bg-gray-600">
+                            <button  wire:click="$dispatch('pic')" class=" relative flex justify-center object-cover items-center w-full h-36 mt-2  rounded-full overflow-hidden bg-gray-300 dark:bg-gray-500">
                                 <div class=" absolute bg-gray-600/50 dark:bg-gray-200/50 w-full h-full opacity-0 hover:opacity-100">
                                     <div class="w-full h-2/3"></div>
                                     <div class=" text-sm font-semibold h-1/3 w-full bg-gray-900/50 dark:bg-gray-700/50 text-center pt-2 text-white"> {{ __('etudiants.profil-photo') }}</div>
                                 </div>
                                 @if ($etud->image)
                                     <img wire:model='image' src="{{ asset('storage/'.$etud->image) }}" class="h-full w-auto object-cover "    />
-                                @else --}}
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-full text-gray-200 dark:text-gray-600" viewBox="0 0 20 20" fill="currentColor">
+                                @else 
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-full text-gray-100 dark:text-gray-800" viewBox="0 0 20 20" fill="currentColor">
                                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd" />
                                     </svg>
-                                {{-- @endif
-                            </button> --}}
+                                @endif
+                            </button> 
 
                         </div>
                 @endcannot

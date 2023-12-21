@@ -34,7 +34,7 @@ class ProfEdit extends Component
     public $mid;
     public $sc = 0;
 
-    public $wh = 1;
+    public $wh = 0;
 
     public $pass;
     public $whcode;

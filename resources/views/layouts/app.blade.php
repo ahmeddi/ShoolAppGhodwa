@@ -136,7 +136,7 @@
                                         clip-rule="evenodd"
                                         />
                                     </svg>
-                                    <span class="hidden sm:inline">{{ auth()->user()->name }}</span>
+                                    <span class="hidden sm:inline">{{  auth()->user() ? auth()->user()->name : ''}}</span>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 20 20"
@@ -225,7 +225,7 @@
                     </h2>  
                 </div>
             </header>
-        @endif
+            @endif
 
             <!-- Page Content -->
             <main>

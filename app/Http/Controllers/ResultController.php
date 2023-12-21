@@ -39,6 +39,12 @@ class ResultController extends Controller
             $mat    = Mat::find($mat);
             $dev    = Examen::find($dev);
 
+            if (!($dev)) {
+                abort(404);
+            }
+            if (!($dev->sem)) {
+                abort(404);
+            }
 
             if (app()->getLocale() == 'ar') {
                 $sem_nom = $dev->sem->nom;
@@ -94,7 +100,7 @@ class ResultController extends Controller
 
     public function notes($locale, $etud)
     {
-        if (auth()->user()->parent_id or auth()->user()->prof_id) {
+        if (auth()->user()->prof_id) {
             abort(403);
         }
 

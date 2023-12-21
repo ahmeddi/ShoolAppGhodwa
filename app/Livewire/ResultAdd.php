@@ -21,6 +21,23 @@ class ResultAdd extends Component
     #[Rule('required')]
     public $classe, $exam, $mat, $sem;
 
+    private function getMatsAndClassesForProf($profId)
+    {
+        $prof = Prof::with('mats', 'classes')->find($profId);
+        return [
+            'mats' => $prof->mats->unique('id'),
+            'classes' => $prof->classes->unique('id')
+        ];
+    }
+
+    private function getAllMatsAndClasses()
+    {
+        return [
+            'mats' => Mat::all('nom', 'id'),
+            'classes' => Classe::all('nom', 'id')
+        ];
+    }
+
 
     public function mount()
     {
@@ -28,19 +45,11 @@ class ResultAdd extends Component
 
 
 
-        if (auth()->user()->prof_id) {
+        $profId = auth()->user()->prof_id;
+        $data = $profId ? $this->getMatsAndClassesForProf($profId) : $this->getAllMatsAndClasses();
 
-            $prof = Prof::find(auth()->user()->prof_id);
-
-            $this->mats = $prof->mats->unique('id');
-            $this->classes = $prof->classes->unique('id');
-        } else {
-            $this->mats = Mat::all('nom', 'id');
-            $this->classes = Classe::all('nom', 'id');
-        }
-
-
-
+        $this->mats = $data['mats'];
+        $this->classes = $data['classes'];
 
         $this->sems = Semestre::with('examens')->get();
     }
@@ -62,7 +71,7 @@ class ResultAdd extends Component
         $this->validate();
 
 
-        $class =  Classe::find($this->classe);
+        $class =  Classe::with('mats')->find($this->classe);
 
         $msg = 'القسم لا يدرس هذه المادة';
         $msg2 = 'Le classe n\'enseigne pas cette matière';
