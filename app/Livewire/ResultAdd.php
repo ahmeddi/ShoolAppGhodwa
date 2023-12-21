@@ -19,7 +19,7 @@ class ResultAdd extends Component
     public $mats = [];
 
     #[Rule('required')]
-    public $classe, $exam, $mat, $sem;
+    public $classe, $exam, $mat, $sem = 1;
 
     private function getMatsAndClassesForProf($profId)
     {
@@ -51,16 +51,21 @@ class ResultAdd extends Component
         $this->mats = $data['mats'];
         $this->classes = $data['classes'];
 
-        $this->sems = Semestre::with('examens')->get();
+        $this->sems = Semestre::with('examens')->get()->first();
+
+        $this->exams =  Semestre::find($this->sem)->examens;
     }
 
     function update()
     {
+        /*
         if ($this->sem) {
             $this->exams =  Semestre::find($this->sem)->examens;
         } else {
             $this->exams = [];
         }
+        */
+        // $this->exams =  Semestre::find($this->sem)->examens;
     }
 
     public function save()
