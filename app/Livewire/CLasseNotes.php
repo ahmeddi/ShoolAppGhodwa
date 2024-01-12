@@ -18,6 +18,9 @@ class CLasseNotes extends Component
     public $sem;
     public $mat;
     public $score;
+    public $dev;
+
+
 
     public function mount()
     {
@@ -56,6 +59,21 @@ class CLasseNotes extends Component
             $this->results = $this->results->filter(function ($result) use ($sem) {
                 return $result->examen->semestre_id == $sem;
             });
+        }
+
+        // Filter by exam or dev
+        if ($this->dev && $this->dev !== '*') {
+            $dev = (int) $this->dev;
+
+            if ($dev == 1) {
+                $this->results = $this->results->filter(function ($result) use ($dev) {
+                    return $result->examen->devoir == 0;
+                });
+            } else  if ($dev == 2) {
+                $this->results = $this->results->filter(function ($result) use ($dev) {
+                    return $result->examen->devoir == 1;
+                });
+            }
         }
 
         // Filter by mat

@@ -15,6 +15,8 @@ return [
 
     'result_add' => 'Ajouter Resultat',
 
+    'devs' => 'Devoirs',
+    'exams' => 'Examens',
 
 
 

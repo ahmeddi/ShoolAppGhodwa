@@ -1,7 +1,7 @@
 <div class=" mx-2">
     <div class=" bg-white shadow-md p-3 dark:bg-gray-900 rounded-md">
         <div  class="flex space-x-4 justify-between  text-center text-gray-500  ">
-            <div class=" grid gap-2 grid-cols-2 lg:grid-cols-4  items-center">
+            <div class=" grid gap-1 grid-cols-2 lg:grid-cols-5  items-center">
                 <div class="flex flex-col">
                     <label for="eid"  class="labels rllt">{{ __('result.sem') }} :</label>
                     <select wire:model='sem'  class="inputs  w-32 "   required >
@@ -27,10 +27,19 @@
                         @endforeach
                     </select>
                 </div> 
+                  <div class="flex flex-col">
+                    <label for="eid"  class="labels rllt">{{ __('result.devs')  }} / {{ __('result.exams')  }} :</label>
+                        <select wire:model.defer='dev' class="inputs w-32">
+                            <option  class="text-sm" value="*">{{ __('compt.Tous') }}</option>
+                            <option selected value="1">{{ __('result.devs') }}</option>
+                            <option  value="2">{{ __('result.exams') }}</option>
+                        </select>
+                </div> 
                 <div>
+
                     <label for="eid"  class="labels opacity-0">{{ __('result.mat') }} :</label>
                     <div class="relative">
-                      <input type="text" wire:model.defer='score' class="inputs w-36">
+                      <input type="text" wire:model.defer='score' class="inputs w-fit">
                       <div class="absolute ltr:right-0 rtl:left-0  inset-y-0 flex items-center text-gray-500 ">
                         <select wire:model.defer='filts' class="inputs w-16">
                           <option selected value="1">+</option>
