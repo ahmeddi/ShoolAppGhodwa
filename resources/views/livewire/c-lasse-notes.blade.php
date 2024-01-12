@@ -108,11 +108,13 @@
                                         @endif
                                     </th>
                                     <th scope="row" class="px-6 py-2 break-words font-semibold text-gray-900  dark:text-white">
-                                        @if (app()->getLocale() == 'ar')
-                                            {{ $result->etudiant->nom }}
-                                        @else
-                                            {{ $result->etudiant->nomfr }}
-                                        @endif
+                                        <a wire:navigate.hover href="{{url(app()->getLocale().'/Etudiant'.'/'.$result->etudiant->id) }}" class=" hover:underline" >
+                                            @if (app()->getLocale() == 'ar')
+                                                {{ $result->etudiant->nom }}
+                                            @else
+                                                {{ $result->etudiant->nomfr }}
+                                            @endif
+                                        </a>
                                     </th>
                                     <th scope="row" class="px-6 py-2 w-40 break-words font-semibold text-gray-900  dark:text-white">
                                         {{ $result->mat->nom }}
