@@ -31,8 +31,8 @@
                     <label for="eid"  class="labels opacity-0">{{ __('result.mat') }} :</label>
                     <select wire:change='filterResults' wire:model='score'  class="inputs w-32 "   required >
                         <option  class="text-sm" value="*">{{ __('compt.Tous') }}</option>
-                        <option class="text-sm" value="1">{{ "+10" }}</option>
-                        <option class="text-sm" value="2">{{ "-10" }}</option>
+                        <option class="text-sm" value="1">{{ "+" }}</option>
+                        <option class="text-sm" value="2">{{ "-" }}</option>
                     </select>
                 </div>
  
@@ -88,9 +88,23 @@
                             <th scope="row" class="px-6 py-2 w-40 break-words font-semibold text-gray-900  dark:text-white">
                                 {{ $result->mat->nom }}
                             </th>
+                            @php
+                                $note = $result->note;
+                                $tot = $result->proportions->tot;
+                                $color = 0;
+                                if ( $note < $tot/2) {
+                                $color = 1;
+                                }
+                            @endphp
                             <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <div class="my-1 font-bold text-sm print:text-xs text-teal-600 dark:text-teal-300 print:text-gray-900 dark:print:text-gray-900">
-                                    {{ $result->note }}
+                                <div @class(['my-1 rllt font-bold text-sm print:text-xs flex rtl:flex-row-reverse ltr:flex rtl:justify-end ', 
+                                'text-teal-600 dark:text-teal-300' => !$color,
+                                'text-red-600 dark:text-red-300' => $color,
+                                ])>
+                                      
+                                    <div>{{ $note }}</div>
+                                    <div>/</div>
+                                    <div>{{ $tot }}</div>
                                 </div>
                             </th>
                         </tr>

@@ -31,6 +31,18 @@ class EtudResult extends Component
     {
         $this->results = $this->etudiant->results;
 
+        if ($this->score == 1) {
+            $this->results = $this->results->filter(function ($result) {
+                $tot =  $result->proportions->tot / 2;
+                return $result->note >= $tot;
+            });
+        } else if ($this->score == 2) {
+            $this->results = $this->results->filter(function ($result) {
+                $tot =  $result->proportions->tot / 2;
+                return $result->note <  $tot;
+            });
+        }
+
         // Filter by semester
         if ($this->sem && $this->sem !== '*') {
             $sem = (int) $this->sem;
