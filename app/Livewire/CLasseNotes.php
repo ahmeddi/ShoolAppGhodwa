@@ -20,6 +20,9 @@ class CLasseNotes extends Component
     public $score;
     public $dev;
 
+    public $moy;
+
+
 
 
     public function mount()
@@ -31,6 +34,7 @@ class CLasseNotes extends Component
         $this->sems = Semestre::all('id', 'nom', 'nomfr');
         $this->mats = $this->classe->mats;
         $this->devs = $this->classe->devs;
+        $this->moy = $this->classe->moy;
     }
 
     public function filterResults()

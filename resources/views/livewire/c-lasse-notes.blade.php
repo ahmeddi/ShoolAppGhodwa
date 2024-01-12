@@ -120,6 +120,8 @@
                                     @php
                                        $note = $result->note;
                                        $tot = $result->proportions->tot;
+
+                                       $moy ? $tot = $result->proportions->tot : $tot = 20 ;
                                        $color = 0;
                                        if ( $note < $tot/2) {
                                         $color = 1;
