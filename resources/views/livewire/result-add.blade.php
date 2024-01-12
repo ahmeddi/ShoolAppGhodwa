@@ -30,14 +30,17 @@
             <label for="eid"  class="labels">{{ __('result.sem') }} :</label>
             @error('sem') <span class="danger ">{{ $message }}</span> @enderror  
             </div>
-            <select wire:model="sem"   class="inputs w-full @error('sem') reds @enderror">
-                        <option selected disabled value="{{ $sems->id }}">
+            <select disabled wire:change='update' wire:model="sem"   class="inputs w-full @error('sem') reds @enderror">
+                <option  value="">-----</option>
+                    @foreach ($sems as $sem)
+                        <option @if($sem->id == 1) selected @endif  value="{{ $sem->id }}">
                             @if ( app()->getLocale() == 'ar')
-                                {{ $sems->nom }}
+                                {{ $sem->nom }}
                             @else
-                                {{ $sems->nomfr }} 
+                                {{ $sem->nomfr }} 
                             @endif 
                         </option>
+                    @endforeach 
             </select>     
         </div>
         <div class="flex flex-col space-y-1 w-full ">

@@ -150,7 +150,9 @@
                     </div>
 
               
-          </div>  
+          
+                  </div>  
+          </div>
        </x-slot>
 
        <x-slot name='footer' >

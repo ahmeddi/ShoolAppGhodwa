@@ -90,7 +90,7 @@ Route::middleware([
         #Etudiants --------------------------------------------------------
 
         Route::get('/Etudiants', function () {
-            if (auth()->user()->parent_id) {
+            if (auth()->user()->parent_id or auth()->user()->role == 'prof') {
                 abort(403);
             }
 
@@ -152,6 +152,9 @@ Route::middleware([
         })->name('ClassMats');
 
         Route::get('/Classe/Results/{id}/Sem/{sem}', [JornsController::class, "result"]);
+
+        Route::get('/Classe/{id}/Results', [JornsController::class, "results"]);
+
 
 
         #Matieres --------------------------------------------------------

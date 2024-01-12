@@ -42,30 +42,24 @@ class ResultAdd extends Component
     public function mount()
     {
 
-
-
-
         $profId = auth()->user()->prof_id;
         $data = $profId ? $this->getMatsAndClassesForProf($profId) : $this->getAllMatsAndClasses();
 
         $this->mats = $data['mats'];
         $this->classes = $data['classes'];
 
-        $this->sems = Semestre::with('examens')->get()->first();
+        $this->sems = Semestre::with('examens')->get();
 
-        $this->exams =  Semestre::find($this->sem)->examens;
+        $this->update();
     }
 
     function update()
     {
-        /*
         if ($this->sem) {
             $this->exams =  Semestre::find($this->sem)->examens;
         } else {
             $this->exams = [];
         }
-        */
-        // $this->exams =  Semestre::find($this->sem)->examens;
     }
 
     public function save()

@@ -36,5 +36,11 @@ class Result extends Model
     {
         return $this->belongsTo(Examen::class);
     }
-    
+
+    public function proportions()
+    {
+
+        return  $this->belongsTo(Proportion::class, 'mat_id', 'mat_id')
+            ->where('classe_id', $this->class_id);
+    }
 }

@@ -16,6 +16,7 @@ return [
     'jorns' => 'Calendrier',
     'mats' => 'Matières',
     'result' => 'Résultats',
+    'bult' => 'Bulletins',
 
     'class-nom' => 'Nom du Classe',
     'class-res' => 'Méthode de Calcul des Résultats',
@@ -44,5 +45,8 @@ return [
 
     'soir' => 'Prix de la Cours du Soir',
     'soir-jorn' => 'Emploi Cours du Soir',
+
+    'filtre' => 'Filtrer',
+
 
 ];
