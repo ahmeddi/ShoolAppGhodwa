@@ -9,7 +9,9 @@ use App\Models\Examen;
 use App\Models\Etudiant;
 use App\Models\Semestre;
 use Illuminate\Http\Request;
+use App\Services\CalculBulttin;
 use App\Models\ProfClassesResult;
+use App\Services\CalculBulttinElemnt;
 
 class ResultController extends Controller
 {
@@ -69,14 +71,24 @@ class ResultController extends Controller
 
     public function bulltin($locale, $etud, $sem)
     {
-        if (auth()->user()->parent_id or auth()->user()->prof_id) {
+        if (auth()->user()->role == 'prof') {
+            abort(403);
+        }
+
+        if (auth()->user()->parent_id) {
             abort(403);
         }
 
         if (Semestre::find($sem)) {
+
+            $etud = Etudiant::find($etud);
+
+            $this->calculBulttin($etud->classe->id, $sem, $etud->classe->moy);
+
             return view('Bulltin', [
-                'etud' => $etud,
+                'etud' => $etud->id,
                 'sem' => $sem,
+                'classe_moy' => $etud->classe->moy,
             ]);
         } else {
             return abort(404);
@@ -123,5 +135,15 @@ class ResultController extends Controller
             // 'results' => $results,
             'etudiant' => $etudiant,
         ]);
+    }
+
+
+    public function calculBulttin($classeId, $semId, $isEelm)
+    {
+        if ($isEelm) {
+            new CalculBulttinElemnt($classeId, $semId);
+        } else {
+            new CalculBulttin($classeId, $semId);
+        }
     }
 }

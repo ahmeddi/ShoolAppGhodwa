@@ -6,8 +6,6 @@ return [
     'nb' => 'Numéro d\'appel',
     'nom' => 'Nom',
 
-
-
     'prix' => 'Prix de la Classe',
     'tb' => 'Nombre de Tables',
     'etuds' => 'Nombre d\'Étudiants',

@@ -1,5 +1,5 @@
 <div dir="rtl" class=" flex flex-col space-y-2 w-full h-full">
-    <img wire:model='header' src="{{ asset('storage'.'/'.$header) }}" class="h-32 w-auto object-cover mb-3 "    />
+    <img wire:model='header' src="{{ asset('storage'.'/'.$header) }}" class="h-40 w-auto object-contain mb-3 "    />
 
     <div class="w-full flex mb-1 rounded-md p-2 border border-gray-600">
 
@@ -52,22 +52,20 @@
         كشف الدرجات
     </div>
 
-    <table class="w-full  text-xs text-right text-gray-900  dark:text-gray-400">
-            <tr class="text-xs  divide-y divide-x divide-gray-900 dark:bg-gray-800 bg-gray-100 border border-gray-900">
+    <table class="w-full  text-sm text-right text-gray-900  dark:text-gray-400">
+        <thead>
+            <tr class="text-sm  divide-y divide-x divide-gray-900 dark:bg-gray-800 bg-gray-100 border border-gray-900">
                 <th scope="col" class="py-1 px-3 border border-gray-900">   
                     <div>المادة</div>
                     <div>Matiere</div>
                 </th>
                 <th scope="col" class="py-1 px-3 text-center border border-gray-900"> 
-                    <div> نتائج الاختبار</div>
+                    <div> نتائج الاختبارات</div>
                     <div>Note Devoirs</div>
                 </th>
-                <th scope="col" class="py-1 px-3 text-center">
-                    <div> معدل الاختبار</div>
-                    <div>Moy Devoirs</div>
-                </th>
+
                 <th scope="col" class="py-1 px-3 text-center">   
-                    <div>    نتيجة الامتحانات </div>
+                    <div>    نتيجة الامتحان </div>
                     <div>Note Compo</div>
                 </th>
 
@@ -96,88 +94,49 @@
                     <div>Total</div>
                 </th>
                 @endif
-
             </tr>
+        </thead>
+            
         <tbody>
             @forelse ($results as $result)
-
                 <tr class="border border-gray-900 divide-y divide-x divide-gray-900 w-full even:bg-gray-100 dark:even:bg-gray-800 dark:odd:bg-gray-900 bg-white  dark:bg-gray-800 ">
-                    <th scope="row" class="py-1 px-3 font-medium print:dark:text-gray-700 print:text-gray-700 text-gray-900 whitespace-nowrap dark:text-white  border border-gray-900">
+                    <th scope="row" class="py-1 px-3 font-bold print:dark:text-gray-700 print:text-gray-700 text-gray-900 whitespace-nowrap dark:text-white  border border-gray-900">
                         {{   $result['nom']  }}
                     </th>
-                    <td class="py-1 px-3  font-mono">
+                    <td class="py-1 px-3 font-medium  font-mono">
                         {{ $result['devn']  }}
                     </td>
-                    <td class="py-1 px-3 text-center font-mono">
 
-                        @if ($result['devm'])
-                             {{  round($result['devm'], 2) }}
-                        @endif
-                        
-                 
-                    </td>
-                    <td class="py-1 px-3 text-center font-mono">
+                    <td class="py-1 px-3 font-medium text-center font-mono">
                         {{ $result['examn']  }}
                     </td>
-                    
-
-                    @if (!$classmoy)
-                    <td class="py-1 px-3 text-center font-mono">
+                    <td class="py-1 px-3 font-medium text-center font-mono">
                         {{ $result['moy']  }}
                     </td>
-                    @endif
 
-                    <td class="py-1 px-3 text-center font-mono">
+                    <td class="py-1 px-3 font-medium text-center font-mono">
                         {{ $result['foix']  }}
                     </td>
-                @if (!$classmoy)
-                    <td class="py-1 px-3 text-center font-mono">
-                        {{ $result['tot']  }}
-                        </td>
-                @endif
-                </tr>   
 
+                    <td class="py-1 px-3 font-medium text-center font-mono">
+                        {{ $result['tot']  }}
+                    </td>
+                </tr>   
             @empty
             @endforelse
-
-            @if($classmoy)
-            <tr class="border border-gray-900 divide-y divide-x divide-gray-900 w-full even:bg-gray-100 dark:even:bg-gray-800 dark:odd:bg-gray-900 bg-white border-b dark:bg-gray-800 print:border-gray-900 dark:border-gray-900">
-                <th colspan="3" class="py-1 px-3 font-medium print:dark:text-gray-700 print:text-gray-700 text-gray-900 whitespace-nowrap dark:text-white">
-                     
-                </th>
-
-                
-                <td class="py-1 px-3 text-center font-bold  font-mono">
-                    {{ $moy  }}
-                </td>
-                <td class="py-1 px-3 text-center font-bold font-mono">
-                    {{ $tots }}
-                    </td>
-
-            </tr>   
-            @endif
+ 
 
 
         </tbody>
     </table>
+
     <div class="flex justify-between print:dark:text-gray-700 print:text-gray-700 text-gray-900 whitespace-nowrap dark:text-white">
         <div class="py-1 px-3 font-bold">
             المعدل العام
         </div>
-
-        @if($classmoy and $tots)
         <div  class="py-1 px-3 text-center font-bold text-lg">
-            {{ '10' }} / {{ ($moy*10)/$tots }} 
+            {{ $moy }}   
         </div>
-         @endif
-
-         @if(!$classmoy and $moy)
-        <div  class="py-1 px-3 text-center font-bold text-lg">
-            {{ $tots }} / {{ $moy }} 
-        </div>
-         @endif
-
-
 
         <div class="py-1 px-3 font-bold ">
             Moyenne generale
@@ -206,4 +165,4 @@
         </div>
     </div>
     
-</div>
+</div> 

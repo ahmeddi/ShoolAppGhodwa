@@ -9,73 +9,63 @@ use App\Models\Mat;
 
 class EtudNotes extends Component
 {
-    public  $classe,$mat,$dev;
+    public  $classe, $mat, $dev;
 
     public $cid;
-    public $note =[];
+    public $note = [];
 
     public function mount()
     {
 
-        foreach ($this->classe->etuds as $etud) 
-        {
-               $note = Result::where('etudiant_id',$etud->id)
-               ->where('mat_id',$this->mat->id)
-               ->where('class_id',$this->classe->id)
-               ->where('examen_id', $this->dev->id)
-               ->first();
+        foreach ($this->classe->etuds as $etud) {
+            $note = Result::where('etudiant_id', $etud->id)
+                ->where('mat_id', $this->mat->id)
+                ->where('class_id', $this->classe->id)
+                ->where('examen_id', $this->dev->id)
+                ->first();
 
-               if ($note) 
-               {
-                    $this->note[] = $note->note;
-               } 
-               
-               else 
-               {
-                    $note = Result::create([
-                        'etudiant_id' => $etud->id,
-                        'class_id' => $this->classe->id,
-                        'mat_id' => $this->mat->id,
-                        'examen_id' => $this->dev->id,
-                        'note' =>  '',
-                    ]);
+            if ($note) {
+                $this->note[] = $note->note;
+            } else {
+                $note = Result::create([
+                    'etudiant_id' => $etud->id,
+                    'class_id' => $this->classe->id,
+                    'mat_id' => $this->mat->id,
+                    'examen_id' => $this->dev->id,
+                    'note' =>  '',
+                ]);
 
-                    $this->note[] = '';
-               }
-               
+                $this->note[] = '';
+            }
         }
-
     }
 
     public function save()
     {
-            foreach ($this->classe->etuds as $index => $etud) 
-            {
+        foreach ($this->classe->etuds as $index => $etud) {
 
-                $note = Result::where('etudiant_id',$etud->id)
-                ->where('mat_id',$this->mat->id)
-                ->where('class_id',$this->classe->id)
+            $note = Result::where('etudiant_id', $etud->id)
+                ->where('mat_id', $this->mat->id)
+                ->where('class_id', $this->classe->id)
                 ->where('examen_id', $this->dev->id)
                 ->first();
- 
-                $note->update(['note' =>  $this->note[$index],]);
 
-            } 
+            $note->update(['note' =>  $this->note[$index],]);
+        }
 
-            $this->calculBulttin();
+        //  $this->calculBulttin();
     }
 
-    public function calculBulttin() 
+    public function calculBulttin()
     {
-            $semId = $this->dev->sem->id;
-            $classeId = $this->classe->id;
+        $semId = $this->dev->sem->id;
+        $classeId = $this->classe->id;
 
-            CalculBulttin::dispatch($classeId, $semId);
-            
+        CalculBulttin::dispatch($classeId, $semId);
     }
 
 
-    
+
     public function render()
     {
         return view('livewire.etud-notes');

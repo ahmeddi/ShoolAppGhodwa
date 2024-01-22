@@ -23,7 +23,13 @@
                             </div> --}}
                             <div class="w-full h-full flex flex-col items-start p-4"> 
                                 {{-- {{ dd($lists) }} --}}
-                                @livewire('bullltin',['etud' => $list->id,'sem' => $sem,], key($list->id))
+                                {{-- @livewire('bullltin',['etud' => $list->id,'sem' => $sem,], key($list->id)) --}}
+
+                                @if ($list->classe->moy == 1)
+                                    @livewire('bulttin-elem',['etud' => $list->id,'sem' => $sem,], key($list->id))
+                                @else
+                                    @livewire('bullltin',['etud' => $list->id,'sem' => $sem,], key($list->id))
+                                @endif
                             </div> 
     
                             <div class=" absolute z-10 w-full bottom-28   px-20 text-lg text-gray-700 print:dark:text-gray-900   dark:text-gray-100">

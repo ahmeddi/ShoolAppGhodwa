@@ -12,25 +12,30 @@ class MattEdit extends Component
 {
     public $visible = false;
 
-    #[Rule('required')] 
-    public $nom ;
+    #[Rule('required')]
+    public $nom;
+
+    #[Rule('required')]
+    public $lang;
 
     public $mid;
 
 
-   // protected $listeners = ['mattedit' => 'open',];
+    // protected $listeners = ['mattedit' => 'open',];
 
 
-    #[On('mattedit')] 
-    public function open($id) 
-    {      
+    #[On('mattedit')]
+    public function open($id)
+    {
         $this->resetErrorBag();
         $this->resetValidation();
 
-        
+
         $mat = Mat::find($id);
         $this->nom = $mat->nom;
+        $this->lang = $mat->arabic;
         $this->mid = $mat->id;
+
 
         $this->visible = true;
     }
@@ -38,21 +43,21 @@ class MattEdit extends Component
     public function save()
     {
 
-         $this->resetErrorBag();
-         $this->resetValidation();
+        $this->resetErrorBag();
+        $this->resetValidation();
 
-         $this->validate();
+        $this->validate();
 
-            $mat = Mat::find($this->mid);
+        $mat = Mat::find($this->mid);
 
-            $mat->nom = $this->nom;
+        $mat->nom = $this->nom;
+        $mat->arabic = $this->lang;
 
 
-            $mat->save();
-    
-           $this->dispatch('refresh');
-           $this->visible = false;
+        $mat->save();
 
+        $this->dispatch('refresh');
+        $this->visible = false;
     }
 
 
@@ -63,7 +68,7 @@ class MattEdit extends Component
             $wire.visible = false;
         JS;
     }
-    
+
     public function render()
     {
         return view('livewire.matt-edit');

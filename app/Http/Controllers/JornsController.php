@@ -7,6 +7,8 @@ use App\Models\Classe;
 use App\Models\Profil;
 use App\Models\Semestre;
 use Illuminate\Http\Request;
+use App\Services\CalculBulttin;
+use App\Services\CalculBulttinElemnt;
 
 class JornsController extends Controller
 {
@@ -68,7 +70,7 @@ class JornsController extends Controller
 
     public function result($locale, $id, $sem)
     {
-        if (auth()->user()->parent_id or auth()->user()->role == 'prof') {
+        if (auth()->user()->parent_id) {
             abort(403);
         }
 
@@ -78,6 +80,9 @@ class JornsController extends Controller
         if ($classe and  $sem) {
 
             $list = $classe->etuds;
+
+            $this->calculBulttin($classe->id, $sem->id, $classe->moy);
+
             return view(
                 'ClasseBulttins',
                 [
@@ -145,6 +150,7 @@ class JornsController extends Controller
         }
     }
 
+
     public function results($locale, $ids)
     {
         if (auth()->user()->parent_id or auth()->user()->role == 'prof') {
@@ -157,6 +163,16 @@ class JornsController extends Controller
             return view('ClasseResults', ['Classs' => $Classs]);
         } else {
             abort(404);
+        }
+    }
+
+
+    public function calculBulttin($classeId, $semId, $isEelm)
+    {
+        if ($isEelm) {
+            new CalculBulttinElemnt($classeId, $semId);
+        } else {
+            new CalculBulttin($classeId, $semId);
         }
     }
 }

@@ -29,7 +29,7 @@ class CLasseNotes extends Component
     {
         $this->results = $this->classe->results;
 
-        // dd($this->results);
+        //dd($this->results);
 
         $this->sems = Semestre::all('id', 'nom', 'nomfr');
         $this->mats = $this->classe->mats;

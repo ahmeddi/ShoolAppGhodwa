@@ -4,11 +4,11 @@ return [
 
     'mats' => 'Matières',
 
-    'add' => 'Ajouter un Matière', 
+    'add' => 'Ajouter un Matière',
     'edit' => 'Modifier le nom de la Matière ',
-    'nom' => 'Nom de la Matière', 
+    'nom' => 'Nom de la Matière',
 
-    'add-nom' => 'Nom de la Matière', 
+    'add-nom' => 'Nom de la Matière',
 
     'mat-cancel' => 'Annuler',
     'mat-save' => 'Enregistrer',
@@ -19,7 +19,10 @@ return [
     'mat-supp' => 'Supprimer',
     'mat-ann' => ' Annuler',
 
+    'mat-lang' => 'Langue',
 
 
- 
+
+
+
 ];

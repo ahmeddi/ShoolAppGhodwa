@@ -27,6 +27,20 @@
                     </div>
                 </div>
 
+                <div class="grid lg:grid-cols-2 gap-x-6 gap-y-3 px-12  justify-items-center sm:grid-cols-1 ">
+                    <div class="flex flex-col space-y-1 col-span-2 w-full">
+                        <div class="flex justify-between">
+                          <label for="lang"  class="labels">{{ __('mats.mat-lang') }} :</label>
+                          @error('lang') <span class="danger ">{{ $message }}</span> @enderror  
+                        </div>
+                        <select  wire:model.defer='lang'  class="inputs  w-full col-span-2 @error('lang') reds @enderror" name="sexe"  required >
+                            <option class="text-sm" value="null" >-----</option>
+                            <option  class="text-sm" value="1">العربية</option>
+                            <option class="text-sm" value="2">Français</option>
+                        </select>
+                    </div>
+                </div>
+
             </div>  
          </x-slot>
 

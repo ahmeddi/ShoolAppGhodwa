@@ -3,7 +3,7 @@
         <x-slot name='title'>
             <div class='relative w-full px-12 text-lg font-bold text-green-900 dark:text-gray-50 '>
               <div>
-                {{ __('mats.edit') }}
+                {{ __('mats.add') }}
                </div> 
                <button wire:click="close" class="absolute top-0 rtl:left-2 ltr:right-2 z-20 flex items-center justify-center w-8 h-8 text-green-700 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-gray-50">
                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"  viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -24,6 +24,20 @@
                           @error('nom') <span class="danger ">{{ $message }}</span> @enderror  
                         </div>
                         <input wire:model.defer='nom' class="inputs w-full col-span-2 @error('nom') reds @enderror" type="text"   required  />       
+                    </div>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-x-6 gap-y-3 px-12  justify-items-center sm:grid-cols-1 ">
+                    <div class="flex flex-col space-y-1 col-span-2 w-full">
+                        <div class="flex justify-between">
+                          <label for="lang"  class="labels">{{ __('mats.mat-lang') }} :</label>
+                          @error('lang') <span class="danger ">{{ $message }}</span> @enderror  
+                        </div>
+                        <select  wire:model.defer='lang'  class="inputs  w-full col-span-2 @error('lang') reds @enderror" name="sexe"  required >
+                            <option class="text-sm" value="null" >-----</option>
+                            <option  class="text-sm" value="1">العربية</option>
+                            <option class="text-sm" value="2">Français</option>
+                        </select>
                     </div>
                 </div>
 

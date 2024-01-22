@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mat extends Model
 {
-    protected $fillable = ['nom'];
-    
+    protected $fillable = ['nom', 'arabic'];
+
     use HasFactory;
 }

@@ -12,15 +12,18 @@ class MattAdd extends Component
 {
     public $visible = false;
 
-    #[Rule('required')] 
+    #[Rule('required')]
     public $nom;
 
+    #[Rule('required')]
+    public $lang;
 
-   // protected $listeners = ['mattadd' => 'open',];
 
-    #[On('mattadd')] 
-    public function open() 
-    {      
+    // protected $listeners = ['mattadd' => 'open',];
+
+    #[On('mattadd')]
+    public function open()
+    {
         $this->resetErrorBag();
         $this->resetValidation();
         $this->reset();
@@ -30,18 +33,20 @@ class MattAdd extends Component
 
     public function save()
     {
-       $this->resetErrorBag();
-       $this->resetValidation();
+        $this->resetErrorBag();
+        $this->resetValidation();
 
-       $this->validate();
+        $this->validate();
 
-       Mat::create(['nom'   => $this->nom,]);
+        Mat::create([
+            'nom'   => $this->nom,
+            'arabic'  => $this->lang,
+        ]);
 
-       $this->dispatch('refresh');
+        $this->dispatch('refresh');
 
-       $this->reset();
-       $this->visible = false;
-
+        $this->reset();
+        $this->visible = false;
     }
 
     #[Js]
@@ -51,7 +56,7 @@ class MattAdd extends Component
             $wire.visible = false;
         JS;
     }
-    
+
     public function render()
     {
         return view('livewire.matt-add');

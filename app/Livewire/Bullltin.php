@@ -13,21 +13,25 @@ use App\Models\Proportion;
 
 class Bullltin extends Component
 {
-    public $etud, $sem, $mats, $results = [], $number, $classe, $tot = 0, $totmat =0, $moy, $classmoy, $tots, $note;
+    public $etud, $sem, $mats, $results = [], $number, $classe, $tot = 0, $totmat = 0, $moy, $classmoy, $tots, $note;
     public $header;
 
+
+    public $mat_total = 0;
+    public $etud_total = 0;
+    public $count_mat_foix = 0;
 
     public function mount()
     {
         $this->initializeData();
+
         $this->calculateResults();
-        $this->calculateTotals();
+
+        $this->getRank();
+
         $this->calculateNote();
-        
+
         $this->header = Profil::find(1)->header;
-
-
-       
     }
 
     private function initializeData()
@@ -43,45 +47,56 @@ class Bullltin extends Component
     {
         if ($this->sem->examens->isNotEmpty()) {
             $this->results = $this->mats->map(function ($mat) {
-                $nom = $mat->only('nom', 'id');
-                $arrn = [];
-                $arrs = 0;
-                $exan = 0;
-                $devs = 0;
+
+                $mat_ = $mat->only('nom', 'id');
+
+                $devs_notes = [];
+                $devs_moy = 0;
+                $devs_count = 0;
+                $devs_tot = 0;
+                $exam_note = 0;
+                $dev_note = 0;
 
                 foreach ($this->sem->examens as $dev) {
                     if ($dev->devoir == 1) {
-                        $exan = $this->getExamResult($nom['id'], $dev->id);
+                        $exam_note = $this->getExamResult($mat_['id'], $dev->id);
                         continue;
                     }
 
-                    $exam = $this->getDevResult($nom['id'], $dev->id);
+                    $dev_note = $this->getDevResult($mat_['id'], $dev->id);
 
-                    if ($exam && $exam->note) {
-                        $arrn[] = $exam->note;
-                        $arrs += (double) $exam->note;
-                        $devs++;
+                    if ($dev_note && $dev_note->note) {
+                        $devs_notes[] = $dev_note->note;
+                        $devs_count += (float) $dev_note->note;
+                        $devs_tot++;
                     }
                 }
 
-                $foix = $this->getProportionFoix($nom['id']);
+                $foix = $this->getProportionFoix($mat_['id']);
 
-                $devm = $devs ? $arrs / $devs : '';
-                $tot = !$this->classmoy ? ($devs ? round(((floatval($arrs) + floatval($exan)) / ($devs + 1)) * $foix, 2) : '') : floatval($exan);
-                $this->calculateTotal($tot, $foix);
-                $moys = !$this->classmoy ? ($devs ? round((floatval($arrs) + floatval($exan)) / ($devs + 1), 2) : '') : floatval($exan);
+                $devs_moy = $devs_tot ? $devs_count / $devs_tot : '';
+                $exam_note =  floatval($exam_note);
+
+                $tot = round(floatval($foix * $exam_note), 1);
+
+
+                $this->etud_total +=  $tot;
+
+                $this->count_mat_foix += $foix;
 
                 return [
-                    'nom' => $nom['nom'],
-                    'devn' => implode(" - ", $arrn),
-                    'devm' => $devm,
-                    'examn' => $exan,
-                    'moy' => $moys,
+                    'nom' => $mat_['nom'],
+                    'devn' => implode(" - ", $devs_notes),
+                    'devm' => $devs_moy,
+                    'examn' => $exam_note,
+                    'moy' => $exam_note, // devs_moy + exam_note
                     'foix' => $foix,
-                    'tot' => round(floatval($tot), 1),
+                    'tot' => $tot,
                 ];
             });
         }
+
+        $this->moy = round(floatval($this->etud_total / $this->count_mat_foix), 1);
     }
 
     private function getExamResult($matId, $examenId)
@@ -109,35 +124,13 @@ class Bullltin extends Component
         return !$this->classmoy ? ($foix ? floatval($foix->foix) : 1) : floatval($foix->tot);
     }
 
-    private function calculateTotal($tot, $foix)
+
+    private function getRank()
     {
-        $this->tot += floatval($tot);
-        $this->totmat += $foix;
-    }
-
-    private function calculateTotals()
-    {
-        /**
-         * 
-         $this->number = Classement::where('semestre_id', $this->sem->id)
-        ->where('classe_id', $this->classe)
-        ->where('etudiant_id', $this->etud->id)
-        ->value('moy');
-         */
-
-        if ($this->totmat) {
-            if (!$this->classmoy) {
-                $this->moy = round($this->tot / $this->totmat, 1);
-            } else {
-                $this->moy = round($this->tot);
-            }
-
-            $this->number = Classement::where('semestre_id', $this->sem->id)
+        $this->number = Classement::where('semestre_id', $this->sem->id)
             ->where('classe_id', $this->classe)
             ->where('etudiant_id', $this->etud->id)
             ->value('moy');
-
-        }
     }
 
     private function calculateNote()
@@ -152,48 +145,25 @@ class Bullltin extends Component
             7 => "تهنئة - Félicitation",
         ];
 
-        if ($this->totmat) {
-            if ($this->classmoy) {
-                if ($this->moy < 60) {
-                    $this->note = $note[1];
-                } else if ($this->moy >= 60 && $this->moy < 80) {
-                    $this->note = $note[2];
-                } else if ($this->moy >= 80 && $this->moy < 90) {
-                    $this->note = $note[3];
-                } else if ($this->moy >= 90 && $this->moy < 110) {
-                    $this->note = $note[4];
-                } else if ($this->moy >= 110 && $this->moy < 130) {
-                    $this->note = $note[5];
-                } else if ($this->moy >= 130 && $this->moy < 150) {
-                    $this->note = $note[6];
-                } else if ($this->moy > 150) {
-                    $this->note = $note[7];
-                }
-            } else {
-                if ($this->moy < 6) {
-                    $this->note = $note[1];
-                } else if ($this->moy >= 6 && $this->moy < 8) {
-                    $this->note = $note[2];
-                } else if ($this->moy >= 8 && $this->moy < 9) {
-                    $this->note = $note[3];
-                } else if ($this->moy >= 9 && $this->moy < 11) {
-                    $this->note = $note[4];
-                } else if ($this->moy >= 11 && $this->moy < 13) {
-                    $this->note = $note[5];
-                } else if ($this->moy >= 13 && $this->moy < 15) {
-                    $this->note = $note[6];
-                } else if ($this->moy > 15) {
-                    $this->note = $note[7];
-                }
-            }
+        if ($this->moy < 6) {
+            $this->note = $note[1];
+        } else if ($this->moy >= 6 && $this->moy < 8) {
+            $this->note = $note[2];
+        } else if ($this->moy >= 8 && $this->moy < 9) {
+            $this->note = $note[3];
+        } else if ($this->moy >= 9 && $this->moy < 11) {
+            $this->note = $note[4];
+        } else if ($this->moy >= 11 && $this->moy < 13) {
+            $this->note = $note[5];
+        } else if ($this->moy >= 13 && $this->moy < 15) {
+            $this->note = $note[6];
+        } else if ($this->moy > 15) {
+            $this->note = $note[7];
         }
     }
 
     public function render()
     {
-            $this->classmoy ? $this->tots = $this->totmat : $this->tots = 20;
-
-
         return view('livewire.bullltin');
     }
 }
