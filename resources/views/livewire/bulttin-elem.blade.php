@@ -53,7 +53,7 @@
     </div>
 
 
-    <div class=" flex w-full gap-x-4 text-base">
+    <div class=" flex w-full gap-x-4 text-sm">
 
         <table class="w-1/2 h-fit   text-right text-gray-900  dark:text-gray-400">
             <tr class=" h-10  divide-y divide-x divide-gray-900 dark:bg-gray-800 bg-gray-100 border border-gray-900">
