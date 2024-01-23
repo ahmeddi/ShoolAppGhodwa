@@ -15,16 +15,10 @@
             </button>
         </div>
         <div  class="m-2 print:m-0" >
-            <div class="p-1 flex items-center flex-col w-full space-y-4 print:space-y-0  ">
+            <div class="p-1 mb-6 flex items-center flex-col w-full space-y-4 print:space-y-0  ">
                 @forelse ($lists as $list)
-                    <div class=" relative flex justify-center items-center  h-[297mm] w-[210mm] p-5 bg-white dark:bg-gray-900 overflow-hidden print:shadow-none">
-                            {{-- <div class="  absolute print:flex flex top-3  justify-center w-full h-full">
-                                <img  src="{{ asset('storage/head/02.jpg') }}"  class=" object-cover h-32  w-fit p-2 " >    
-                            </div> --}}
-                            <div class="w-full h-full flex flex-col items-start p-4"> 
-                                {{-- {{ dd($lists) }} --}}
-                                {{-- @livewire('bullltin',['etud' => $list->id,'sem' => $sem,], key($list->id)) --}}
-
+                    <div class=" flex flex-col justify-center items-center  h-[297mm] w-[210mm] p-3 bg-white dark:bg-gray-900 overflow-hidden print:shadow-none">
+                            <div class="w-full h-full flex flex-col items-start p-2"> 
                                 @if ($list->classe->moy == 1)
                                     @livewire('bulttin-elem',['etud' => $list->id,'sem' => $sem,], key($list->id))
                                 @else
@@ -32,8 +26,8 @@
                                 @endif
                             </div> 
     
-                            <div class=" w-full mt-5  px-20 text-lg text-gray-700 print:dark:text-gray-900   dark:text-gray-100">
-                                <div class="w-full p-4 flex  justify-center items-center"> 
+                            <div class=" w-full h-28 text-sm px-20 text-gray-700 print:dark:text-gray-900   dark:text-gray-100">
+                                <div class="w-full flex  justify-center items-center"> 
                                 <div>بتاريخ :  </div>
                                     <div class=" mx-4 font-bold">{{ \Carbon\Carbon::now()->format('d-m-Y') }}</div>
                                     <div> :Le </div>
