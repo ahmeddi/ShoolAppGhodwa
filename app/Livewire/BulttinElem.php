@@ -165,9 +165,9 @@ class BulttinElem extends Component
         $this->moy = round(($note * $note_total) / $mat_total, 1);
 
         $note = [
-            1 => "عمل ضعيف - Mauvais travail",
-            2 => "يحتاج مزيدا من العمل - A besoin de plus de travail",
-            3 => "يمكن ان يكون احسن - Ça pourrait être mieux",
+            1 => "عمل ضعيف -  Travail faible",
+            2 => "يحتاج مزيدا من العمل - Encore du travail",
+            3 => "يمكن ان يكون احسن - Peut être amélioré",
             4 => "عمل مقبول - Passable",
             5 => "لوحة شرف - Tableau d'honneur",
             6 => "تشجيع - Encouragements",
