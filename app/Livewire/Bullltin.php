@@ -77,7 +77,9 @@ class Bullltin extends Component
                 $devs_moy = $devs_tot ? $devs_count / $devs_tot : '';
                 $exam_note =  floatval($exam_note);
 
-                $tot = round(floatval($foix * $exam_note), 1);
+                $mat_moy = ((floatval($devs_moy) * 3 + $exam_note * 2)) / 5;
+
+                $tot = round(floatval($foix * $mat_moy), 1);
 
 
                 $this->etud_total +=  $tot;
@@ -89,7 +91,7 @@ class Bullltin extends Component
                     'devn' => implode(" - ", $devs_notes),
                     'devm' => $devs_moy,
                     'examn' => $exam_note,
-                    'moy' => $exam_note, // devs_moy + exam_note
+                    'moy' => $mat_moy, // devs_moy + exam_note
                     'foix' => $foix,
                     'tot' => $tot,
                 ];
