@@ -7,7 +7,7 @@
 
     <div class="py-2 print:py-0 ">
         <div class="max-w-7xl mx-2">
-            <div class="flex flex-col space-y-2 bg-white dark:bg-gray-900 overflow-hidden print:shadow-none  shadow-md p-4 sm:rounded-lg">
+            <div class="flex flex-col justify-between space-y-2 bg-white dark:bg-gray-900 overflow-hidden print:shadow-none  shadow-md p-4 sm:rounded-lg">
                 <div class="p-1 flex justify-between items-center w-full">
                     <div class="print:text-2xl print:font-bold"></div>
                     <button x-on:click="printDiv()" class="print:hidden bg-gray-200 p-4 rounded-md hover:bg-teal-200 text-teal-800 ">
@@ -24,8 +24,8 @@
                         @livewire('bullltin',['etud' => $etud,'sem' => $sem,])
                     @endif
                 </div> 
-                <div dir="rtl" class=" hidden print:block absolute mt-5   px-20 text-lg text-gray-700 print:dark:text-gray-900   dark:text-gray-100">
-                    <div class="w-full p-4 flex  justify-center items-center"> 
+                <div class=" w-full h-40 text-base px-20 text-gray-700 print:dark:text-gray-900   dark:text-gray-100">
+                    <div class="w-full flex  justify-center items-center"> 
                     <div>بتاريخ :  </div>
                         <div class=" mx-4 font-bold">{{ \Carbon\Carbon::now()->format('d-m-Y') }}</div>
                         <div> :Le </div>
