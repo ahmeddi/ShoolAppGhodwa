@@ -6,7 +6,7 @@
                     <div class="px-2 w-72">
                         {{ __('classe.mat-mat') }} 
                     </div>
-                    @if (!$ClsseMoy)
+                    @if ($ClsseMoy != 1)
                         <div class="w-60">{{ __('classe.mat-foix') }} </div>
                     @else
                         <div> {{ __('classe.mat-pts') }}</div>
