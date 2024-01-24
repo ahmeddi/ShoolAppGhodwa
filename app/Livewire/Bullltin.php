@@ -77,7 +77,8 @@ class Bullltin extends Component
                 $devs_moy = $devs_tot ? $devs_count / $devs_tot : '';
                 $exam_note =  floatval($exam_note);
 
-                if ($this->classmoy == 3) { // without devs
+
+                if ($this->classmoy == 2) { // without devs
                     $mat_moy = $exam_note;
                 } else { // with devs
                     $mat_moy = ((floatval($devs_moy) * 3 + $exam_note * 2)) / 5;
