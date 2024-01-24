@@ -79,8 +79,6 @@
                 <th scope="col" class="py-1 px-3 text-center">
                         <div> الضارب </div>
                         <div>Coefficient</div>
-                        <div> المجموع </div>
-                        <div>Total</div>
                 </th>
 
                 <th scope="col" class="py-1 px-3 text-center">
