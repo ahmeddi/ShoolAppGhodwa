@@ -69,31 +69,24 @@
                     <div>Note Compo</div>
                 </th>
 
-                @if (!$classmoy)  
                 <th scope="col" class="py-1 px-3 text-center">
                     
                     <div> المعدل </div>
                     <div>Moyenne</div>
                 </th>
-                @endif
 
 
                 <th scope="col" class="py-1 px-3 text-center">
-                    @if (!$classmoy)
                         <div> الضارب </div>
                         <div>Coefficient</div>
-                    @else
                         <div> المجموع </div>
                         <div>Total</div>
-                    @endif
                 </th>
 
-                @if (!$classmoy)  
                 <th scope="col" class="py-1 px-3 text-center">
                     <div> المجموع </div>
                     <div>Total</div>
                 </th>
-                @endif
             </tr>
         </thead>
             
