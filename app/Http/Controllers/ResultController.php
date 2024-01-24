@@ -140,7 +140,7 @@ class ResultController extends Controller
 
     public function calculBulttin($classeId, $semId, $isEelm)
     {
-        if ($isEelm) {
+        if ($isEelm == 1) {
             new CalculBulttinElemnt($classeId, $semId);
         } else {
             new CalculBulttin($classeId, $semId);

@@ -61,7 +61,7 @@ class EtudNotes extends Component
         $semId = $this->dev->sem->id;
         $classeId = $this->classe->id;
 
-        CalculBulttin::dispatch($classeId, $semId);
+        //  CalculBulttin::dispatch($classeId, $semId);
     }
 
 

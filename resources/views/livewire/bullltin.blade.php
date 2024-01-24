@@ -133,7 +133,7 @@
             Moyenne generale
         </div>
     </div>
-    <div class="border border-gray-900 p-1 w-full flex justify-between print:dark:text-gray-700 print:text-gray-700 text-gray-900 whitespace-nowrap dark:text-white">
+    {{-- <div class="border border-gray-900 p-1 w-full flex justify-between print:dark:text-gray-700 print:text-gray-700 text-gray-900 whitespace-nowrap dark:text-white">
         <div class="px-3">
             الرتبة
         </div>
@@ -143,7 +143,7 @@
         <div class="px-3">
             Rang
         </div>
-    </div>
+    </div> --}}
     <div class="p-1 w-full flex justify-between print:dark:text-gray-700 print:text-gray-700 text-gray-900 whitespace-nowrap dark:text-white">
         <div>
             التقدير
