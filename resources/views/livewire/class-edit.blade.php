@@ -35,6 +35,7 @@
                         <option  class="text-sm" selected disabled >----------</option>
                           <option  class="text-sm" value="1">{{ __('classe.tot') }}</option>
                           <option class="text-sm" value="0">{{ __('classe.moy') }}</option>
+                          <option class="text-sm" value="2">{{ __('classe.ter') }}</option>
                       </select>
                   </div>
                       

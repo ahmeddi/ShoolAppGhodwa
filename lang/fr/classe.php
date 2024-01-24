@@ -20,6 +20,7 @@ return [
     'class-res' => 'Méthode de Calcul des Résultats',
     'tot' => 'Total',
     'moy' => 'Moyenne',
+    'ter' => 'Moyenne Terminale',
     'class-prix' => 'Prix',
     'class-tb' => 'Nombre de Places',
     'cancel' => 'Annuler',
