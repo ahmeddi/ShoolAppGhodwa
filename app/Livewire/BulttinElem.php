@@ -124,6 +124,7 @@ class BulttinElem extends Component
     private function getExamResult($matId, $examenId)
     {
         return Result::where('etudiant_id', $this->etud->id)
+            ->where('class_id', $this->classe)
             ->where('mat_id', $matId)
             ->where('examen_id', $examenId)
             ->value('note');

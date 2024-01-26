@@ -103,6 +103,7 @@ class CalculBulttinElemnt
     private function getExamResult(int $etudiantId, int $matId, int $examenId)
     {
         return Result::where('etudiant_id', $etudiantId)
+            ->where('class_id', $this->classeId)
             ->where('mat_id', $matId)
             ->where('examen_id', $examenId)
             ->value('note');
