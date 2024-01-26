@@ -23,17 +23,7 @@ class Bullltin extends Component
 
     public function mount()
     {
-        $result = Result::where('class_id', 14)
-            ->where('examen_id', 4)
-            ->where('mat_id', 38)
-            //   ->where('etudiant_id', 180)
-            ->get();
 
-        foreach ($result as $res) {
-            // $res->delete();
-        }
-
-        //dd($result);
 
         $this->initializeData();
 
