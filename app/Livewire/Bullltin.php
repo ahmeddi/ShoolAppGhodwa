@@ -23,6 +23,18 @@ class Bullltin extends Component
 
     public function mount()
     {
+        $result = Result::where('class_id', 14)
+            ->where('examen_id', 4)
+            ->where('mat_id', 38)
+            //   ->where('etudiant_id', 180)
+            ->get();
+
+        foreach ($result as $res) {
+            // $res->delete();
+        }
+
+        //dd($result);
+
         $this->initializeData();
 
         $this->calculateResults();
@@ -59,11 +71,12 @@ class Bullltin extends Component
 
                 foreach ($this->sem->examens as $dev) {
                     if ($dev->devoir == 1) {
-                        $exam_note = $this->getExamResult($mat_['id'], $dev->id);
+                        $note = $this->getExamResult($mat_['id'], $dev->id, $this->classe);
+                        $exam_note = $note;
                         continue;
                     }
 
-                    $dev_note = $this->getDevResult($mat_['id'], $dev->id);
+                    $dev_note = $this->getDevResult($mat_['id'], $dev->id, $this->classe);
 
                     if ($dev_note && $dev_note->note) {
                         $devs_notes[] = $dev_note->note;
@@ -106,19 +119,21 @@ class Bullltin extends Component
         $this->moy = round(floatval($this->etud_total / $this->count_mat_foix), 1);
     }
 
-    private function getExamResult($matId, $examenId)
+    private function getExamResult($matId, $examenId, $classe)
     {
         return Result::where('etudiant_id', $this->etud->id)
             ->where('mat_id', $matId)
             ->where('examen_id', $examenId)
+            ->where('class_id', $classe)
             ->value('note');
     }
 
-    private function getDevResult($matId, $examenId)
+    private function getDevResult($matId, $examenId, $classe)
     {
         return Result::where('etudiant_id', $this->etud->id)
             ->where('mat_id', $matId)
             ->where('examen_id', $examenId)
+            ->where('class_id', $classe)
             ->first();
     }
 
@@ -126,9 +141,10 @@ class Bullltin extends Component
     {
         $foix = Proportion::where('classe_id', $this->classe)
             ->where('mat_id', $matId)
+
             ->first();
 
-        return !$this->classmoy ? ($foix ? floatval($foix->foix) : 1) : floatval($foix->tot);
+        return $foix ? floatval($foix->foix) : 1;
     }
 
 

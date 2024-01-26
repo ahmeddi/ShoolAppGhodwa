@@ -44,13 +44,17 @@ class EtudNotes extends Component
     {
         foreach ($this->classe->etuds as $index => $etud) {
 
-            $note = Result::where('etudiant_id', $etud->id)
-                ->where('mat_id', $this->mat->id)
-                ->where('class_id', $this->classe->id)
-                ->where('examen_id', $this->dev->id)
-                ->first();
-
-            $note->update(['note' =>  $this->note[$index],]);
+            foreach ($this->classe->etuds as $index => $etud) {
+                $note = Result::updateOrCreate(
+                    [
+                        'etudiant_id' => $etud->id,
+                        'mat_id' => $this->mat->id,
+                        'class_id' => $this->classe->id,
+                        'examen_id' => $this->dev->id,
+                    ],
+                    ['note' => $this->note[$index]]
+                );
+            }
         }
 
         //  $this->calculBulttin();

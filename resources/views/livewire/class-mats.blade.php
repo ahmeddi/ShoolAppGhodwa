@@ -32,7 +32,7 @@
                                         </div>
                                     </div>
                                 </label>
-                                @if (!$ClsseMoy)
+                                @if (!($ClsseMoy == 1))
                                      <input   wire:model.defer='valeursFoix.{{ $index }}' class="inputs h-8 opacity-0  peer-checked:opacity-100  @error('foix') reds @enderror" type="text"   required  />           
                                 @else
                                     <input   wire:model.defer='valeursTot.{{ $index }}' class="inputs h-8 opacity-0  peer-checked:opacity-100  @error('foix') reds @enderror" type="text"   required  />  

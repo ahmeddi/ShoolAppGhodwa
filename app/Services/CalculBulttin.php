@@ -129,8 +129,6 @@ class CalculBulttin
         return $foix ? floatval($foix->foix) : 1;
     }
 
-
-
     private function addNote($tots, $etudiantId)
     {
         $classement = Classement::firstOrCreate([
