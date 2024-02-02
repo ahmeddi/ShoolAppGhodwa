@@ -63,11 +63,15 @@
                                                 @endcan
                                                 
                                                     <div class=" my-1 font-bold text-sm print:text-xs text-teal-600 dark:text-teal-300 print:text-gray-900 dark:print:text-gray-900">
-                                                        {{ $data->mat->nom }}
+                                                        @if ($data->mat)
+                                                            {{ $data->mat->nom }}
+                                                        @endif
                                                     </div>
                                                     @can('sur_or_dir')
                                                     <div wire:loading.remove class=" font-bold print:hidden text-gray-800 text-xs  dark:text-gray-200 print:text-gray-900 dark:print:text-gray-900">
-                                                        {{ $data->prof->nom }}
+                                                        @if ($data->prof)
+                                                            {{ $data->prof->nom }}
+                                                        @endif
                                                     </div>
                                                     @endcan
                                                     

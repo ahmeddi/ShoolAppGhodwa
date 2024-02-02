@@ -56,10 +56,14 @@
                                                 @endcan
                                                
                                                     <div wire:loading.remove class=" my-1 font-bold text-sm print:text-xs text-teal-600 dark:text-teal-300 print:text-gray-900 dark:print:text-gray-900">
-                                                        {{ $data->mat->nom }}
+                                                        @if ($data->mat)
+                                                            {{ $data->mat->nom }}
+                                                        @endif
                                                     </div>
                                                     <div wire:loading.remove class=" font-bold text-gray-800 text-xs  dark:text-gray-200 print:text-gray-900 dark:print:text-gray-900">
-                                                        {{ $data->classe->nom }}
+                                                        @if ($data->classe)
+                                                            {{ $data->classe->nom }}
+                                                        @endif
                                                     </div>
                                                     <div wire:loading role="status">
                                                         <svg aria-hidden="true" class="mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-teal-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
