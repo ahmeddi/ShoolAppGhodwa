@@ -43,7 +43,7 @@
 
         <div>
             {{-- <x-order.index.filter-range :$ranges />  --}}
-            <x-dropdown.dropdown-menu :$ranges :$selectedRange :$rangeName :$customRangeStart :$customRangeEnd/> 
+            <x-Dropdown.dropdown-menu :$ranges :$selectedRange :$rangeName :$customRangeStart :$customRangeEnd/> 
 
         </div>
     </div>
