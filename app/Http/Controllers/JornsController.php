@@ -175,4 +175,19 @@ class JornsController extends Controller
             new CalculBulttin($classeId, $semId);
         }
     }
+
+    public function compt($locale, $ids)
+    {
+        if (auth()->user()->parent_id or auth()->user()->role == 'prof') {
+            abort(403);
+        }
+
+        $Classs = Classe::find($ids);
+
+        if ($Classs) {
+            return view('ClasseComp', ['Classs' => $Classs]);
+        } else {
+            abort(404);
+        }
+    }
 }

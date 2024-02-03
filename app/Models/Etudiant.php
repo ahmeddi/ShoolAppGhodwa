@@ -31,36 +31,71 @@ class Etudiant extends Model
 
     public function classe()
     {
-    	return $this->belongsTo(Classe::class)->orderBy('id','desc');
+        return $this->belongsTo(Classe::class)->orderBy('id', 'desc');
     }
 
     public function parent()
     {
-    	return $this->belongsTo(Parentt::class)->orderBy('id','desc');
+        return $this->belongsTo(Parentt::class)->orderBy('id', 'desc');
     }
 
     public function hours()
     {
-    	return $this->hasMany(Attande::class);
+        return $this->hasMany(Attande::class);
     }
 
     public function notes()
     {
-    	return $this->hasMany(Note::class);
+        return $this->hasMany(Note::class);
     }
 
 
     public function frais()
     {
-    	return $this->hasMany(Fraisetud::class,'etudiant_id','id');
+        return $this->hasMany(Fraisetud::class, 'etudiant_id', 'id');
     }
 
 
     public function results()
     {
-       return $this->hasMany(Result::class);                           
+        return $this->hasMany(Result::class);
     }
 
+    public function peiements()
+    {
+        return $this->hasMany(EtudPaiement::class, 'etudiant_id', 'id');
+    }
+
+    public function fraisMonthStatus($month)
+    {
+        $status = 0; // Initialize the $status variable
+
+        $frais = $this->frais->where('mois', $month)->first()->montant ?? 0;
+        $paiement = $this->peiements->where('month', $month)->sum('montant') ?? 0;
 
 
+
+        if ($frais) {
+            if ($paiement) {
+                if ($paiement >= $frais) {
+                    $frais = 0;
+                    $status = 1;
+                } else {
+                    $frais = $frais - $paiement;
+                    $status = 2;
+                }
+            } else {
+                $frais = $frais;
+                $status = 3;
+            }
+        } else if ($paiement) {
+            $status = 4;
+        }
+
+        return [
+            'frais' => $frais,
+            'paiement' => $paiement,
+            'status' => $status,
+        ];
+    }
 }

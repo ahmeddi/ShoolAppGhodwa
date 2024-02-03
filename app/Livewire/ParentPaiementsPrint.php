@@ -15,29 +15,40 @@ class ParentPaiementsPrint extends Component
 {
     public $visible = false;
 
-    public $ids,$note;
+    public $paiements = [];
 
-    public $nom,$nomfr, $sexe;
+    public $monthValuesFr;
+    public $monthValuesAr;
 
-    #[Rule('required',as: ' ')]
-    public $montant = 6000,$date,$motif;
+    public $ids, $note;
 
-    public $chiffre,$chiffrear;
+    public $nom, $nomfr, $sexe;
+
+    #[Rule('required', as: ' ')]
+    public $montant = 6000, $date, $motif;
+
+    public $chiffre, $chiffrear;
 
     public $header;
 
 
 
     #[On('print')]
-    public function open($id) 
+    public function open($id)
     {
 
         $paie = PaiementParent::find($id);
 
+        $this->paiements = $paie->etudPaiements;
+
+
+
+        //  dd($this->paiements);
+
         $this->montant = $paie->montant;
         $this->date = $paie->date;
         $date = Carbon::parse($paie->date);
-        $this->motif = $date->format('dmy').$paie->parent_id;
+        $this->motif = $date->format('dmy') . $paie->parent_id;
 
         $this->nom = $paie->parent->nom;
         $this->nomfr = $paie->parent->nomfr;
@@ -48,17 +59,16 @@ class ParentPaiementsPrint extends Component
 
         $this->header = Profil::find(1)->header;
 
-        $fr = new NumberFormatter('fr',NumberFormatter::SPELLOUT);
-        $ar = new NumberFormatter('ar',NumberFormatter::SPELLOUT);
+        $fr = new NumberFormatter('fr', NumberFormatter::SPELLOUT);
+        $ar = new NumberFormatter('ar', NumberFormatter::SPELLOUT);
 
         $this->chiffre = $fr->format($this->montant);
         $this->chiffrear = $ar->format($this->montant);
 
 
 
-   
-        $this->visible = true;
 
+        $this->visible = true;
     }
 
     #[Js]
@@ -70,6 +80,41 @@ class ParentPaiementsPrint extends Component
     }
     public function render()
     {
+        $this->monthValuesAr = [
+            '1' => 'Janvier',
+            '2' => 'Février',
+            '3' => 'Mars',
+            '4' => 'Avril',
+            '5' => 'Mai',
+            '6' => 'Juin',
+            '7' => 'Juillet',
+            '8' => 'Août',
+            '9' => 'Septembre',
+            '10' => 'Octobre',
+            '11' => 'Novembre',
+            '12' => 'Décembre',
+        ];
+
+        $this->monthValuesFr = [
+            '1' => 'يناير',
+            '2' => 'فبراير',
+            '3' => 'مارس',
+            '4' => 'أبريل',
+            '5' => 'مايو',
+            '6' => 'يونيو',
+            '7' => 'يوليو',
+            '8' => 'اغسطس',
+            '9' => 'سبتمبر',
+            '10' => 'أكتوبر',
+            '11' => 'نوفمبر',
+            '12' => 'ديسمبر',
+
+
+
+        ];
+
+
+
         return view('livewire.parent-paiements-print');
     }
 }

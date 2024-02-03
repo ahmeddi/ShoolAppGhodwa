@@ -17,6 +17,12 @@ class PaiementParent extends Model
 
     public function parent()
     {
-        return $this->belongsTo(Parentt::class);
+        return $this->belongsTo(Parentt::class, 'parent_id');
+    }
+
+
+    public function etudPaiements()
+    {
+        return $this->hasMany(EtudPaiement::class, 'paiement_parent_id');
     }
 }

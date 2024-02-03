@@ -16,9 +16,9 @@
          <x-slot name='content'>
             <div dir="ltr" class="p-2 ">
                 <div class="w-full flex justify-center">
-                    <img wire:model='header' src="{{ asset('storage'.'/'.$header) }}" class="h-28 w-auto object-cover mb-3 "    />
+                    <img wire:model='header' src="{{ asset('storage'.'/'.$header) }}" class="h-28 w-auto object-cover mb-3 hidden print:block "    />
                 </div>
-                <hr class="mb-2">
+                <hr class="mb-2 hidden print:block">
                 <div class="flex justify-between mb-6">
                     <div>
                         <h1 lang="fr" class="text-lg font-bold">{{ __('print.recp') }} </h1>
@@ -40,6 +40,69 @@
                             <span class=" font-bold mx-2">   {{ $sexe == 1 ? 'السيد' : 'السيدة' }} {{  $nom  }}</span>
                         </div>
                     </div>
+
+                    <div>
+
+                    </div>
+                        
+
+                    <div dir="rtl" class="relative overflow-x-auto my-3">
+                        <table class="w-full border border-gray-900 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs border border-gray-900 text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 rounded-s-lg">
+                                        <div class=" flex flex-col gap-y-1">
+                                            <div>الطالب</div>
+                                            <div>Étudiant</div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        <div class=" flex flex-col gap-y-1">
+                                            <div>الشهر</div>
+                                            <div>Mois</div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-1 rounded-e-lg">
+                                        <div class=" flex flex-col gap-y-1">
+                                            <div>المبلغ</div>
+                                            <div>Montant</div>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($paiements as $paiement)
+                                <tr class="bg-white dark:bg-gray-800 border border-gray-900">
+                                    <th scope="row" class="px-6 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        <div class=" flex flex-col gap-y-1">
+                                            <div>{{ $paiement->etud->nom }}</div>
+                                            <div>{{ $paiement->etud->nomfr }}</div>
+                                        </div>
+                                    </th>
+                                    <td class="px-6 py-1 text-gray-900">
+                                         <div class=" flex flex-col gap-y-1">
+                                            <div>{{ $monthValuesFr[$paiement->month] }}</div>
+                                            <div>{{ $monthValuesAr[$paiement->month] }}</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-900">
+                                        {{ $paiement->montant }}
+                                    </td>
+                                </tr>
+                                @empty
+                                @endforelse
+                            </tbody>
+                            <tfoot>
+                                <tr class="font-semibold text-gray-900 dark:text-white">
+                                    <th scope="row" class="px-6 py-3 text-base">Total</th>
+                                    <td class="px-6 py-3"></td>
+                                    <td class="px-6 py-3 font-bold">{{ $montant }}</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+
                     <div class="text-gray-700 text-sm  font-semibold mb-2 w-full flex justify-between">
                         <div  >
                             <span>{{ __('print.montant') }}:</span> 

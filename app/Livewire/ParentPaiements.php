@@ -5,148 +5,99 @@ namespace App\Livewire;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Url;
 use App\Models\PaiementParent;
+use Illuminate\Support\Facades\DB;
 use App\Services\WhatsappApiService;
+use App\Enums\Dates;
+
+use App\Traits\Rangables;
+
+
 
 class ParentPaiements extends Component
 {
-    public $ids;
 
-    public $day1;
-    public $day2;
-    public $date;
-
-    public $t_month = false;
-    public $p_month = false;
-    public $t_week = false;
-
-    public $all = false;
-    
-     
-    public function mount()
-    {
-        $this->alls();
-    }
-      public function thisMonth()
-      {
-        $now = Carbon::now();
-        $from = $now->startOfMonth()->format('Y-m-d') ;
-        $to = $now->endOfMonth()->format('Y-m-d') ;
+  public $ids;
+  use Rangables;
 
 
 
-        $this->date =[$from, $to];
-        
-        $this->reset(['day1','day2',]);
-
-        $this->t_month = true;
-        $this->p_month = false;
-        $this->all = false;
-        $this->t_week = false;
-
-      }
-
-      public function thisWeek()
-      {
-        $now = Carbon::now();
-        $from = $now->startOfWeek()->format('Y-m-d') ;
-        $to = $now->endOfWeek()->format('Y-m-d') ;
+  public function mount()
+  {
 
 
-        $this->date =[$from, $to];
-        $this->reset(['day1','day2',]);
+    $this->ranges = Dates::cases();
 
-        $this->t_month = false;
-        $this->p_month = false;
-        $this->all = false;
-        $this->t_week = true;
-
-      }
-
-      public function randday()
-      {
-        $from = Carbon::parse($this->day1)->format('Y-m-d');
-        $to = Carbon::parse($this->day2)->format('Y-m-d');
+    $this->rangeName = Dates::All_Time->label();
 
 
-        $this->date =[$from, $to];
+    $casesToKeep = ['month', 'today', 'past_month', 'all', 'custom'];
 
-        $this->t_month = false;
-        $this->p_month = false;
-        $this->all = false;
-        $this->t_week = false;
-
-      }
-
-      public function pastMonth()
-      {
-        $now = Carbon::now();
-        $from = $now->startOfMonth()->subMonth()->format('Y-m-d') ;
-        $to = $now->endOfMonth()->format('Y-m-d') ;
+    $this->ranges = array_filter($this->ranges, function ($case) use ($casesToKeep) {
+      return in_array($case->value, $casesToKeep);
+    });
+  }
 
 
 
-        $this->date =[$from, $to];
-        $this->reset(['day1','day2',]);
 
 
-        $this->t_month = false;
-        $this->p_month = true;
-        $this->all = false;
-        $this->t_week = false;
 
-      }
 
-      public function alls()
-      {
-          $now = Carbon::now();
-          $from = Carbon::parse('1-1-2000')->format('Y-m-d') ;
-          $to = $now->format('Y-m-d') ;
-          $this->date =[$from, $to];
-  
-          $this->t_month = false;
-          $this->p_month = false;
-          $this->all = true;
-          $this->t_week = false;
-      }
 
-      #[On('delete')]
-      function delete($idkey)  
-      {
-        PaiementParent::find($idkey)->delete();
-          $this->mount();
-  
-      }
 
-      #[On('wh')]
-      function wh($id)
-      {
-        $paiement = PaiementParent::find($id);
-        $recet = new WhatsappApiService();
-        $num = $paiement->parent->whatsapp;
-        $nom = $paiement->parent->nom;
-        $nomfr = $paiement->parent->nomfr;
-        $sex = $paiement->parent->sexe;
-        $code = $paiement->parent->whcode;
-        $date = $paiement->date;
-        $id = $paiement->parent->id;
-     //   $num = '36411579';
-        $montant = $paiement->montant;
-        $msg = $recet->recets($id,$num,$code,$nom,$nomfr,$sex,$date,$montant);
 
-        $paiement->wh = $msg;
-        $paiement->save();
-        $this->mount();
-        
-      }
+  #[On('delete')]
+  function delete($idkey)
+  {
+    PaiementParent::find($idkey)->delete();
+    $this->mount();
+  }
 
-      
+  #[On('wh')]
+  function wh($id)
+  {
+    $paiement = PaiementParent::find($id);
+    $recet = new WhatsappApiService();
+    $num = $paiement->parent->whatsapp;
+    $nom = $paiement->parent->nom;
+    $nomfr = $paiement->parent->nomfr;
+    $sex = $paiement->parent->sexe;
+    $code = $paiement->parent->whcode;
+    $date = $paiement->date;
+    $id = $paiement->parent->id;
+    //   $num = '36411579';
+    $montant = $paiement->montant;
+    $msg = $recet->recets($id, $num, $code, $nom, $nomfr, $sex, $date, $montant);
 
-    #[On('refresh')] 
-    public function render()
-    {
-        $paiements = PaiementParent::where('parent_id',$this->ids)->whereBetween('date', $this->date)->get();
+    $paiement->wh = $msg;
+    $paiement->save();
+    $this->mount();
+  }
 
-        return view('livewire.parent-paiements',['paiements'=>$paiements]);
-    }
+
+
+  #[On('refresh')]
+  public function render()
+  {
+
+    $this->table_col_id =  'parent_id';
+    $this->table_col_date = 'date';
+
+    $paiements = PaiementParent::where('parent_id', $this->ids);
+
+    $paiements = $this->updatedSelectedRange($paiements);
+
+    $paiements = $this->applySorting($paiements);
+
+    $paiements =  $paiements->get();
+
+
+
+    return view(
+      'livewire.parent-paiements',
+      ['paiements' => $paiements]
+    );
+  }
 }
