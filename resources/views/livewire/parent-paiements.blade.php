@@ -1,50 +1,20 @@
 <div class="w-full h-full px-4 my-8 print:hidden ">
-    <div class=" m-2">
-        <div  class="flex space-x-8 justify-between  text-center text-gray-500 my-2 ">
-             {{-- <div class="flex ">
-                <div> <button  @class(['days','daysselceted' => $t_month,])   class="days " wire:click="thisMonth" >{{ __('calandar.month') }}</button></div> 
-                <div> <button  @class(['days','daysselceted' => $p_month,]) class="days" wire:click="pastMonth" > {{ __('calandar.pastM') }} </button> </div>
-                @cannot('parent')
-                    <div> <button  @class(['days','daysselceted' => $t_week,]) class="days " wire:click="thisWeek" >  {{ __('calandar.week') }}</button> </div> 
-                @endcannot
-                <div> <button  @class(['days','daysselceted' => $all,]) class="days " wire:click="alls" >  {{ __('calandar.tous') }}</button> </div> 
-
-            </div>  --}}
-            <div>
-                 {{-- <x-order.index.filter-range :$ranges />  --}}
-            </div>
-
-
-
+    
+    <div class=" w-full flex my-2 justify-between items-center">
         @cannot('parent')
-            {{-- <div class="space-x-3 flex justify-around   ">
-                <input wire:model='day1'  class="h-10 w-54 inputs ml-2" type="date" name="randday"    />
-                <input wire:model='day2'  class="h-10 w-54 inputs ml-2" type="date" name="randday"    />
-            <button wire:click='randday' class="relative focus:outline-none bg-teal-500 hover:bg-teal-700 dark:bg-gray-100 dark:hover:bg-gray-200 w-12 h-10 rounded-md">
-                        <div class=" absolute top-2.5 left-3.5">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 stroke-current text-white dark:text-gray-900 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
-                        </div>
-            </button> 
-            </div>    --}}
+            <div class= "flex justify-between">
+                <button wire:click="$dispatch('open')" class='focus:outline-none px-4 py-2 dark:text-gray-900 dark:bg-gray-100 text-white rounded-md hover:outline-none bg-teal-600 hover:bg-teal-800' >
+                    {{ __('compt.add') }}
+                </button>
+            </div>
         @endcannot
 
-        </div> 
-    </div> 
-    <div class=" w-full flex  justify-between items-center">
-    @cannot('parent')
-        <div class= "flex justify-between my-3">
-            <button wire:click="$dispatch('open')" class='focus:outline-none px-4 py-2 dark:text-gray-900 dark:bg-gray-100 text-white rounded-md hover:outline-none bg-teal-600 hover:bg-teal-800' >
-                {{ __('compt.add') }}
-            </button>
+        <div class="  cursor-default opacity-0">
+            Placeholder
         </div>
-    @endcannot
 
         <div>
-            {{-- <x-order.index.filter-range :$ranges />  --}}
             <x-Dropdown.dropdown-menu :$ranges :$selectedRange :$rangeName :$customRangeStart :$customRangeEnd/> 
-
         </div>
     </div>
 
@@ -80,7 +50,12 @@
                     @forelse($paiements as $paiement)
                         <tr wire:key='{{ $paiement->id }}' class="h-5 odd:bg-white even:bg-gray-50 dark:odd:bg-gray-800 dark:even:bg-gray-800/70                    ">
                             <td class="px-4 py-2 w-1/2">
-                                    <button class="hover:underline" wire:click="$dispatch('edit',{ id: {{ $paiement->id }} })">
+                                    <button class="hover:underline" 
+                                    @can('comps')
+                                    wire:click="$dispatch('edit',{ id: {{ $paiement->id }} })"
+
+                                    @endcan
+                                    >
                                         <div class="w-full text-sm font-semibold text-gray-900 dark:text-gray-200">
                                             {{ $paiement->date }} 
                                         </div>

@@ -33,9 +33,7 @@ Route::get('/', function () {
     if (auth()->check()) {
         if (auth()->user()->role == 'parent') {
 
-            //  return redirect('Parent/' . auth()->user()->parent_id);
-
-            return redirect()->route('Parent', ['id' => auth()->user()->parent_id]);
+            return redirect('ar/Parent/' . auth()->user()->parent_id);
         }
         if (auth()->user()->role == 'prof') {
             return redirect()->route('homes', ['locale' => 'ar']);

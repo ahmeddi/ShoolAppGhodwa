@@ -1,13 +1,12 @@
 <div>
     <div class="">
-        <div class="flex justify-between w-full  items-center">
+        {{-- <div class="flex justify-between w-full  items-center">
             <select wire:change='monthly' wire:model='month'  class="inputs w-40 "   required >
                 @foreach ($months as $month)
                     <option  class="text-sm" value="{{$month->value}}">{{$month->label()}}</option>
                 @endforeach
             </select>
-            {{-- <x-dropdown.dropdown-menu :$ranges :$selectedRange :$rangeName :$customRangeStart :$customRangeEnd/>  --}}
-        </div>
+        </div> --}}
     </div> 
     <div class="my-4">
         <div class=" flex gap-x-2">
