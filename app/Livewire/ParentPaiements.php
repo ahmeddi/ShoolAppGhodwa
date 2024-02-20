@@ -89,7 +89,7 @@ class ParentPaiements extends Component
 
     $paiements = $this->updatedSelectedRange($paiements);
 
-    $paiements = $this->applySorting($paiements);
+    $paiements = $this->applySorting($paiements,false);
 
     $paiements =  $paiements->get();
 

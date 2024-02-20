@@ -17,11 +17,13 @@ return new class extends Migration
             $table->string('nomfr')->nullable();
             $table->string('tel1')->unique(); 
             $table->string('tel2')->nullable(); 
+            $table->string('whcode')->nullable(); 
             $table->string('nni')->nullable()->unique(); // numero nationale
             $table->longText('diplom')->nullable();   
             $table->string('se')->nullable();   // Autorisation d'enseignement 
             $table->string('ts')->nullable();  //type de salaire 
             $table->string('ms')->nullable();  // montant du salaire
+            $table->string('password')->nullable();
             $table->string('image')->nullable();
             $table->boolean('list')->default(1);
             $table->timestamps();

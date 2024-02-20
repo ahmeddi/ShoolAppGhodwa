@@ -9,39 +9,10 @@
         </div> --}}
     </div> 
     <div class="my-4">
-        <div class=" flex gap-x-2">
-            <div
-                class="block rounded-lg bg-white p-4 shadow-md dark:bg-gray-900">
-                    <h5
-                    class="mb-1 text-lg font-medium leading-tight text-neutral-800 dark:text-neutral-50">
-                    <span>عدد الطلاب الدافعين</span>
-                    </h5>
-                    <p class="mb-1 text-xl font-semibold text-neutral-600 dark:text-neutral-200">
-                        {{ $payedEtuds }} / {{ $etudCount }}
-                    </p>
-            </div>
-
-            <div
-                class="block rounded-lg bg-white p-4 shadow-md dark:bg-gray-900">
-                    <h5
-                    class="mb-1 text-lg font-medium leading-tight text-neutral-800 dark:text-neutral-50">
-                    <span>عدد الطلاب المدينين</span>
-                    </h5>
-                    <p class="mb-1 text-xl text-neutral-600 dark:text-neutral-200">
-                        {{ $unpayedEtuds }} / {{ $etudCount }}
-                    </p>
-            </div>
-
-            <div
-                class="block rounded-lg bg-white p-4 shadow-md dark:bg-gray-900">
-                    <h5
-                        class="mb-1 text-lg font-medium leading-tight text-neutral-800 dark:text-neutral-50">
-                        <span>اجمالي المدفوع  </span>
-                    </h5>
-                    <p class="mb-1 text-xl text-neutral-600 dark:text-neutral-200">
-                        {{ $payedAmount }} / {{ $unpayedAmount }}  
-                    </p>
-            </div>
+        <div class=" border border-gray-200 dark:border-gray-700 shadow grid grid-cols-1 divide-x-0 lg:divide-x divide-y lg:divide-y-0  md:divide-x md:divide-y  divide-gray-200 dark:divide-gray-500 rtl:divide-x-reverse sm:grid-cols-2 lg:grid-cols-3 rounded-md overflow-hidden">
+            <x-My.simple-card :label="__('compt.payed')" :montant="$payedEtuds.' / '.$etudCount" :exp="'no'" :border="1" :url="'#'" />
+            <x-My.simple-card :label="__('compt.unpayed')" :montant="$unpayedEtuds.' / '.$etudCount" :exp="'no'" :border="1" :url="'#'" />
+            <x-My.simple-card :label="__('compt.alls')" :montant="$payedAmount.' / '.$unpayedAmount" :exp="'no'" :border="0" :url="'#'" />
         </div>
    </div>
     

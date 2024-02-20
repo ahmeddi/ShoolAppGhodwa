@@ -18,7 +18,7 @@ trait Rangables
     public $customRangeStart;
     public $customRangeEnd;
 
-    //#[Url]
+    #[Url]
     public $selectedRange = 'all';
 
     public $rangeName;
@@ -39,18 +39,32 @@ trait Rangables
         }
     }
 
-    protected function applySorting($query, $montant = null)
+    protected function applySorting($query, $regular)
     {
-        if ($this->sortCol) {
-            if ($this->sortCol == 'montant') {
-                // dd('hi');
-                $query->orderBy(DB::raw('CAST(montant AS DECIMAL(10, 2))'), $this->sortAsc ? 'asc' : 'desc');
-            } else {
-                $query->orderBy($this->sortCol, $this->sortAsc ? 'asc' : 'desc');
+        if ($regular) {
+            if ($this->sortCol) {
+                if ($this->sortCol == 'montant') {
+                    $query->orderBy(DB::raw('CAST(montant AS DECIMAL(10, 2))'), $this->sortAsc ? 'asc' : 'desc');
+                } else {
+                    $query->orderBy($this->sortCol, $this->sortAsc ? 'asc' : 'desc');
+                }
             }
+            return $query;
         }
-
-        return $query;
+        else{
+            if ($this->sortCol) {
+                if ($this->sortCol == 'montant' or $this->sortCol == 'paiements_sum' or $this->sortCol == 'sold') {
+                    $query = $query->sortBy(function ($item) {
+                        return (float) $item[$this->sortCol];
+                    }, $this->sortAsc ? SORT_REGULAR : SORT_REGULAR, $this->sortAsc);
+                } else {
+                    $query = $query->sortBy($this->sortCol, SORT_REGULAR, $this->sortAsc);            
+                }
+            }
+    
+            return $query;
+        }
+       
     }
 
 
@@ -65,6 +79,7 @@ trait Rangables
             return $query;
         }
         if ($this->selectedRange == 'custom') {
+
             return $this->applyRanges($query, $this->customRangeStart, $this->customRangeEnd);
         }
 
@@ -100,13 +115,13 @@ trait Rangables
 
     public function applyRanges($query, $date1, $date2)
     {
-        // dd($query);
 
         $dates = [$date1, $date2];
 
         if ($this->table_col_id == 'all') {
             $query = $query->whereBetween($this->table_col_date, $dates);
         } else {
+
             $query = $query->where($this->table_col_id, $this->ids)
                 ->whereBetween($this->table_col_date, $dates);
         }

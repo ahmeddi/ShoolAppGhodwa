@@ -5,8 +5,8 @@
         </h2>
     </x-slot>
 
-    <div class=" bg-white shadow-md p-3 dark:bg-gray-900 rounded-md mx-2 mt-4">
-         @livewire('notes')
+    <div class="  mx-2 mt-4">
+        @livewire('notes')
         @livewire('note-add') 
         @livewire('note-edit')  
         @livewire('note-del')  

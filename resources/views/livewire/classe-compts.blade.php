@@ -1,10 +1,10 @@
 <div>
     <div class="w-full overflow-x-auto   print:block lg:block md:block">
-        <table class=" w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <table class=" min-w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-gray-200">
             <tr>
-                <th scope="col" class="py-3 px-6">
-                   
+                <th scope="col" class="py-3 px-6  fixed right-0 ">
+                   <div class=" opacity-0">placeholder</div>
                 </th>
                 @forelse ($Months as $number => $Month )
                 <th scope="col" class="py-3 px-6">
@@ -16,10 +16,10 @@
             </thead>
             <tbody>
                 @foreach ($etuds as $etud)
-                    <tr class="text-center  dark:bg-gray-800 dark:text-gray-100">
+                    <tr class="text-center  even:bg-gray-200 odd:bg-gray-300 even:dark:bg-gray-900 odd:dark:bg-gray-800 dark:text-gray-100">
                         @foreach ($Months as $number => $Month)
                             @if ($loop->first)
-                                <td class="border print:border-gray-900 dark:bg-gray-800 dark:border-gray-600 border-gray-300 bg-gray-100 text-gray-800 p-1   ">
+                                <td class="border dark:bg-gray-950 print:border-gray-900  dark:border-gray-600 border-gray-300 bg-gray-100 text-gray-800 dark:text-gray-100 p-1   ">
                                     <div class="top  w-full">
                                         <a wire:navigate.hover href="{{ url(app()->getLocale().'/Etudiant'.'/'.$etud->id) }}" class="hover:underline text-gray-500 dark:text-gray-300 font-medium print:text-gray-900 dark:print:text-gray-900">
                                             {{ $etud->nom }}
@@ -27,7 +27,7 @@
                                     </div>
                                 </td>
                             @endif   
-                            <td class="bg-white border dark:bg-gray-800 dark:border-gray-600 print:border-gray-900 p-1 relative ">  
+                            <td class="  border  dark:border-gray-600 print:border-gray-900 p-1 relative ">  
                                 <div class=" w-full h-full flex justify-center items-center   my-1 font-bold text-sm print:text-xs text-red-600 dark:text-red-400 print:text-gray-900 dark:print:text-gray-900">
                                     @php
                                       $array =   $etud->fraisMonthStatus($number);

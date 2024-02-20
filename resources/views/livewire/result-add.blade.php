@@ -30,10 +30,10 @@
             <label for="eid"  class="labels">{{ __('result.sem') }} :</label>
             @error('sem') <span class="danger ">{{ $message }}</span> @enderror  
             </div>
-            <select disabled wire:change='update' wire:model="sem"   class="inputs w-full @error('sem') reds @enderror">
+            <select wire:change='update' wire:model="sem"   class="inputs w-full @error('sem') reds @enderror">
                 <option  value="">-----</option>
                     @foreach ($sems as $sem)
-                        <option @if($sem->id == 1) selected @endif  value="{{ $sem->id }}">
+                        <option @if($sem->id == 2) selected @endif  value="{{ $sem->id }}">
                             @if ( app()->getLocale() == 'ar')
                                 {{ $sem->nom }}
                             @else

@@ -80,6 +80,12 @@ return [
 
     'soir' => 'Frais Cours du soir',
 
+    'payed' => 'Nombre d\'étudiants payés',
+    'unpayed' => 'Nombre d\'étudiants non payés',
+    //    'alls' => 'اجمالي المدفوع ',
+    'alls' => 'Total Payé',
+
+
 
 
 

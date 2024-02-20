@@ -113,7 +113,7 @@ class ParentEdit extends Component
 
         $user = User::where('parent_id', $parent->id)->first();
 
-        $password = Str::random(8);
+        $password = rand(1000, 9999);
 
 
 

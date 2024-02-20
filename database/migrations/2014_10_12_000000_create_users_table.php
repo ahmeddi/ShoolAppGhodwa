@@ -18,9 +18,6 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-        //    $table->foreignId('current_team_id')->nullable();
-        //    $table->string('profile_photo_path', 2048)->nullable();
-
             $table->string('role');
             $table->string('tel')->nullable();
             $table->string('whatsapp')->nullable();
@@ -28,6 +25,7 @@ return new class extends Migration
             $table->boolean('list')->default(0);
             $table->boolean('wh')->default(1);
             $table->string('parent_id')->nullable();
+            $table->string('prof_id')->nullable();
             $table->timestamps();
         });
     }

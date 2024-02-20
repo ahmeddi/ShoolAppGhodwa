@@ -145,7 +145,7 @@ class ProfEdit extends Component
 
         if (!($user or ($user->parent_id ?? null))) {
             //  dd(2);
-            $password = Str::random(8);
+            $password = rand(1000, 9999);
 
             User::create([
                 'name'   => $prof->tel1,

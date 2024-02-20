@@ -126,7 +126,7 @@ class EtudiantAdd extends Component
 
         $this->validate();
 
-        $password = Str::random(8);
+        $password = rand(1000, 9999);
 
         
         $parent = Parentt::updateOrCreate(

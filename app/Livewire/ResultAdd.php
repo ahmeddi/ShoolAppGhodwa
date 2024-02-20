@@ -48,7 +48,7 @@ class ResultAdd extends Component
         $this->mats = $data['mats'];
         $this->classes = $data['classes'];
 
-        $this->sems = Semestre::with('examens')->get();
+        $this->sems = Semestre::with('examens')->take(2)->get();
 
         $this->update();
     }

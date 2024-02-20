@@ -58,7 +58,7 @@ class ParentAdd extends Component
         $this->validate();
 
 
-        $password = Str::random(8);
+        $password = rand(1000, 9999);
 
         
 
