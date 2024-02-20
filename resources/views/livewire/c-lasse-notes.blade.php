@@ -120,7 +120,12 @@
                                         {{ $result->mat->nom }}
                                     </th>
                                     @php
-                                       $note = $result->note;
+                                      $color = 0;
+                                      $tot = 0;
+
+
+                                    if ($result->proportions) {
+                                        $note = $result->note;
                                        $tot = $result->proportions->tot;
 
                                        $moy ? $tot = $result->proportions->tot : $tot = 20 ;
@@ -128,6 +133,8 @@
                                        if ( $note < $tot/2) {
                                         $color = 1;
                                        }
+                                    }
+                                       
                                     @endphp
                                     <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         <div @class(['my-1 rllt font-bold text-sm print:text-xs flex rtl:flex-row-reverse ltr:flex rtl:justify-end ', 
